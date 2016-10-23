@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(StorAvell\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -23,7 +23,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(App\PasswordReset::class, function (Faker\Generator $faker) {
+$factory->define(StorAvell\PasswordReset::class, function (Faker\Generator $faker) {
     return [
         'email'  => $faker->safeEmail,
         'token' => str_random(10),

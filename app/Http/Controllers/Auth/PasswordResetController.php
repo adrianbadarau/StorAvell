@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace StorAvell\Http\Controllers\Auth;
 
 use Mail;
-use App\User;
-use App\PasswordReset;
+use StorAvell\User;
+use StorAvell\PasswordReset;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use StorAvell\Http\Controllers\Controller;
 
 class PasswordResetController extends Controller
 {

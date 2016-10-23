@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace StorAvell\Http\Controllers\Auth;
 
 use Auth;
 use JWTAuth;
-use App\User;
+use StorAvell\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use StorAvell\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {

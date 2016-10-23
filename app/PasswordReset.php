@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace StorAvell;
 
 use Illuminate\Database\Eloquent\Model;
 

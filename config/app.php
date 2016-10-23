@@ -171,16 +171,18 @@ return [
         Irazasyed\JwtAuthGuard\JwtAuthGuardServiceProvider::class,
         LaravelAngular\Generators\LaravelServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Nwidart\Modules\LaravelModulesServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\ResponseMacroServiceProvider::class,
+        StorAvell\Providers\AppServiceProvider::class,
+         StorAvell\Providers\BroadcastServiceProvider::class,
+        StorAvell\Providers\AuthServiceProvider::class,
+        StorAvell\Providers\EventServiceProvider::class,
+        StorAvell\Providers\RouteServiceProvider::class,
+        StorAvell\Providers\ResponseMacroServiceProvider::class,
 
     ],
 
@@ -229,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'Module' => Nwidart\Modules\Facades\Module::class,
 
     ],
 

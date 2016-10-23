@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace StorAvell\Exceptions;
 
 use Route;
 use Exception;

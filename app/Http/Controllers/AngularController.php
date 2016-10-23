@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace StorAvell\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
+use StorAvell\Http\Requests;
 
 class AngularController extends Controller
 {

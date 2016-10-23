@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace StorAvell\Http\Controllers;
 
 use Route;
 use Illuminate\Http\Request;

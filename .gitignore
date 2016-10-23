@@ -8,3 +8,6 @@ public/js
 public/css
 public/build
 public/views
+.idea/
+_ide_helper.php
+.phpstorm.meta.php
