@@ -7,6 +7,7 @@ use JWTAuth;
 use StorAvell\User;
 use Illuminate\Http\Request;
 use StorAvell\Http\Controllers\Controller;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
@@ -24,7 +25,7 @@ class AuthController extends Controller
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->error('Invalid credentials', 401);
             }
-        } catch (\JWTException $e) {
+        } catch (JWTException $e) {
             return response()->error('Could not create token', 500);
         }
 
