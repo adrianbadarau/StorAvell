@@ -179,7 +179,7 @@ return [
          * Application Service Providers...
          */
         StorAvell\Providers\AppServiceProvider::class,
-         StorAvell\Providers\BroadcastServiceProvider::class,
+        StorAvell\Providers\BroadcastServiceProvider::class,
         StorAvell\Providers\AuthServiceProvider::class,
         StorAvell\Providers\EventServiceProvider::class,
         StorAvell\Providers\RouteServiceProvider::class,
