@@ -1,0 +1,15 @@
+{
+    "name": "Templating",
+    "alias": "templating",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Templating\\Providers\\TemplatingServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}
