@@ -9,9 +9,9 @@ require('./tasks/bower.task.js');
 
 // setting assets paths
 elixir.config.assetsPath = './';
-elixir.config.css.folder = 'angular';
-elixir.config.css.sass.folder = 'angular';
-elixir.config.js.folder = 'angular';
+elixir.config.css.folder = 'Modules/Templating/Assets/FrontEnd';
+elixir.config.css.sass.folder = 'Modules/Templating/Assets/FrontEnd';
+elixir.config.js.folder = 'Modules/Templating/Assets/FrontEnd';
 
 /*
  |--------------------------------------------------------------------------
@@ -46,13 +46,12 @@ let assets = [
 
 elixir(mix => {
     mix.bower()
-        .copy('angular/app/**/*.html', 'public/views/app/')
-        .copy('/Modules/**/Resources/angular/**/*.html', 'public/views/app')
-        .webpack('index.main.js', 'public/js/app.js')
+        .copy('Modules/Templating/Assets/FrontEnd/app/**/*.html', 'public/views/app/')
+        .webpack('Modules/Templating/Assets/FrontEnd/index.main.js', 'public/js/app.js')
         .sass(['**/*.scss', 'critical.scss'], 'public/css')
         .sass('critical.scss', 'public/css/critical.css')
         .styles(styles, 'public/css/final.css')
-        .eslint('angular/**/*.js')
+        .eslint('Modules/Templating/Assets/FrontEnd/**/*.js')
         .combine(scripts, 'public/js/final.js')
         .version(assets)
         .swPrecache();

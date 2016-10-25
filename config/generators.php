@@ -2,7 +2,7 @@
 
 return [
       'source' => [
-            'root'            => 'angular',
+            'root'            => 'Modules/Templating/Assets/FrontEnd',
             'page'            => 'app/pages',
             'components'      => 'app/components',
             'directives'      => 'directives',

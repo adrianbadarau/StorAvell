@@ -1,6 +1,6 @@
 module.exports = {
     // configuration
-    entry: "./angular/index.main.js",
+    entry: "./Modules/Templating/Assets/FrontEnd/index.main.js",
     module: {
         loaders: [{
             test: /\.js$/,
