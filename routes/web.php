@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', 'AngularController@serveApp');
+use StorAvell\Http\Controllers\Auth\AuthController;
 
+Route::get('/', 'AngularController@serveApp');
+Auth::routes();
 Route::get('/unsupported-browser', 'AngularController@unsupported');
