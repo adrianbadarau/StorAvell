@@ -10,7 +10,7 @@ class TemplatingController extends Controller
 {
     public function frontEnd()
     {
-        return view("templating::frontEnd");
+        return view("templating::index");
     }
 
     public function admin()
