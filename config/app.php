@@ -175,6 +175,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Nwidart\Modules\LaravelModulesServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Caffeinated\Menus\MenusServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -235,6 +236,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'Module' => Nwidart\Modules\Facades\Module::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Menu' => Caffeinated\Menus\Facades\Menu::class,
 
     ],
 

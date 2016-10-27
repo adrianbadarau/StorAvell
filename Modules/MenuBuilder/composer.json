@@ -1,0 +1,15 @@
+{
+    "name": "adrianbadarau/menubuilder",
+    "description": "",
+    "authors": [
+        {
+            "name": "Adrian Badarau",
+            "email": "adi.badarau@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Modules\\MenuBuilder\\": ""
+        }
+    }
+}

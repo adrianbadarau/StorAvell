@@ -1,0 +1,15 @@
+{
+    "name": "MenuBuilder",
+    "alias": "menubuilder",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\MenuBuilder\\Providers\\MenuBuilderServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

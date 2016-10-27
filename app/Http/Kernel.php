@@ -3,6 +3,7 @@
 namespace StorAvell\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Modules\MenuBuilder\Http\Middleware\MenuMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -53,5 +54,6 @@ class Kernel extends HttpKernel
         'guest' => \StorAvell\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'role' => \StorAvell\Http\Middleware\RoleMiddleware::class,
+        'menu' => MenuMiddleware::class
     ];
 }
