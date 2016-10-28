@@ -31,6 +31,9 @@ class MenuMiddleware
                     if($itemToBuild->open_in_new_tab){
                         $itemToBuild->attribute('target','_blank');
                     }
+                    if($menuItem->icon_class){
+                        $itemToBuild->icon($menuItem->icon_class);
+                    }
                 });
                 continue;
             }
@@ -69,6 +72,9 @@ class MenuMiddleware
             }
             if($itemToBuild->open_in_new_tab){
                 $itemToBuild->attribute('target','_blank');
+            }
+            if($menuItem->icon_class){
+                $itemToBuild->icon($menuItem->icon_class);
             }
         }
     }

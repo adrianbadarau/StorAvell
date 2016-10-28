@@ -1,5 +1,9 @@
 @extends("templating::layouts.admin.master")
 
+@section('sidebar-menu')
+    @include("menubuilder::partials.admin.menu.nav-tree")
+@endsection
+
 @section('content')
     <!-- Small boxes (Stat box) -->
     <div class="row">
