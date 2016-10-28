@@ -18,59 +18,39 @@ class MenuItemsSeederTableSeeder extends Seeder
         Model::unguard();
         MenuItem::create([
             'label' => 'Dashboard',
-            'link' => '/admin/dashboard',
+            'link' => 'admin/dashboard',
             'open_in_new_tab' => 0,
             'is_active' => 1,
             'parent_id' => null,
-            'active_zone' => '/admin/dashboard'
+            'active_zone' => 'admin/dashboard',
+            'icon_class' => 'dashboard'
         ]);
         MenuItem::create([
             'label' => 'Products',
-            'link' => '/products',
+            'link' => 'admin/products',
             'open_in_new_tab' => 0,
             'is_active' => 1,
             'parent_id' => null,
-            'active_zone' => '/products/*'
+            'active_zone' => 'admin/products/*',
+            'icon_class' => 'files-o'
         ]);
         MenuItem::create([
             'label' => 'Categories',
-            'link' => '/categories',
+            'link' => 'admin/categories',
             'open_in_new_tab' => 0,
             'is_active' => 1,
             'parent_id' => null,
-            'active_zone' => '/categories/*'
+            'active_zone' => 'admin/categories/*',
+            'icon_class' => 'th'
         ]);
         MenuItem::create([
-            'label' => 'Test Case',
-            'link' => '/test',
+            'label' => 'Menu Builder',
+            'link' => 'admin/menubuilder',
             'open_in_new_tab' => 0,
             'is_active' => 1,
             'parent_id' => null,
-            'active_zone' => '/test/*'
-        ]);
-        MenuItem::create([
-            'label' => 'SubTest',
-            'link' => '/test/sub',
-            'open_in_new_tab' => 0,
-            'is_active' => 1,
-            'parent_id' => 4,
-            'active_zone' => '/test/sub'
-        ]);
-        MenuItem::create([
-            'label' => 'SubTest2',
-            'link' => '/test/sub2',
-            'open_in_new_tab' => 0,
-            'is_active' => 1,
-            'parent_id' => 4,
-            'active_zone' => '/test/sub2'
-        ]);
-        MenuItem::create([
-            'label' => 'SubTest3',
-            'link' => '/test/sub/sub',
-            'open_in_new_tab' => 0,
-            'is_active' => 1,
-            'parent_id' => 6,
-            'active_zone' => '/test/sub2/sub'
+            'active_zone' => 'admin/menubuilder/*',
+            'icon_class' => 'bars'
         ]);
     }
 }

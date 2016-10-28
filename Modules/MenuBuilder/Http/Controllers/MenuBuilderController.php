@@ -5,16 +5,25 @@ namespace Modules\MenuBuilder\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\MenuBuilder\Entities\MenuItem;
 
 class MenuBuilderController extends Controller
 {
+    /**
+     * MenuBuilderController constructor.
+     */
+    public function __construct()
+    {
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        return view('menubuilder::index');
+        $menuItems = MenuItem::all();
+        return view('menubuilder::index',['menuItems'=>$menuItems, 'pageTitle' => 'View All Menu Items']);
     }
 
     /**
