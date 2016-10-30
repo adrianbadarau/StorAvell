@@ -5,7 +5,9 @@ namespace Modules\MenuBuilder\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\MenuBuilder\Entities\MenuItem;
+use Modules\MenuBuilder\Forms\MenuItemForm;
 use Yajra\Datatables\Html\Builder;
 
 class MenuBuilderController extends Controller
@@ -51,11 +53,16 @@ class MenuBuilderController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @param FormBuilder $formBuilder
      * @return Response
      */
-    public function create()
+    public function create(FormBuilder $formBuilder)
     {
-        return view('menubuilder::create');
+        $form = $formBuilder->create(MenuItemForm::class,[
+            'method' => 'POST',
+            'url' => route('menubuilder.store')
+        ]);
+        return view('menubuilder::create', compact('form'));
     }
 
     /**

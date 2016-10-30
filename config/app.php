@@ -177,7 +177,8 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Caffeinated\Menus\MenusServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
-
+        Collective\Html\HtmlServiceProvider::class,
+        Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -239,6 +240,9 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Menu' => Caffeinated\Menus\Facades\Menu::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
 
     ],
 

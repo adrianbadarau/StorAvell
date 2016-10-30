@@ -51,7 +51,7 @@
         </div>
     </div>
 
-@stop
+@endsection
 
 @section('scripts')
     {!! $grid->scripts() !!}
