@@ -19,6 +19,8 @@ class MenuBuilderController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @param Request $request
+     * @param Builder $gridBuilder
      * @return Response
      */
     public function index(Request $request, Builder $gridBuilder)
@@ -42,9 +44,7 @@ class MenuBuilderController extends Controller
             ->addColumn([
                 'data' => 'link', 'name' => 'link', 'title' => 'link'
             ])
-            ->addAction([
-                'data' => 'action', 'name' => 'action', 'title' => 'action'
-            ])
+            ->addAction([])
         ;
         return view('menubuilder::index', ['grid' => $grid, 'pageTitle' => 'View All Menu Items']);
     }
