@@ -176,6 +176,7 @@ return [
         Nwidart\Modules\LaravelModulesServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Caffeinated\Menus\MenusServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -237,6 +238,7 @@ return [
         'Module' => Nwidart\Modules\Facades\Module::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Menu' => Caffeinated\Menus\Facades\Menu::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 
     ],
 

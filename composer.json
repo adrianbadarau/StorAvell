@@ -15,7 +15,8 @@
         "nwidart/laravel-modules": "^1.14",
         "barryvdh/laravel-debugbar": "^2.3",
         "spatie/laravel-permission": "^1.5",
-        "caffeinated/menus": "^3.0"
+        "caffeinated/menus": "^3.0",
+        "yajra/laravel-datatables-oracle": "^6.21"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

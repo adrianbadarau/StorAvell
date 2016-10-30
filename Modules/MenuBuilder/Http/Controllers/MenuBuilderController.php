@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\MenuBuilder\Entities\MenuItem;
+use Yajra\Datatables\Html\Builder;
 
 class MenuBuilderController extends Controller
 {
@@ -20,10 +21,32 @@ class MenuBuilderController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request, Builder $gridBuilder)
     {
-        $menuItems = MenuItem::all();
-        return view('menubuilder::index',['menuItems'=>$menuItems, 'pageTitle' => 'View All Menu Items']);
+        if ($request->ajax()) {
+            $menuItems = MenuItem::select(['id', 'label', 'link'])->get();
+            return \Datatables::of($menuItems)
+                ->addColumn('action', function ($user) {
+                    return '<a href="#edit-' . $user->id . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+                })
+                ->editColumn('id', 'ID: {{$id}}')
+                ->make(true);
+        }
+        $grid = $gridBuilder
+            ->addColumn([
+                'data' => 'id', 'name' => 'id', 'title' => '#'
+            ])
+            ->addColumn([
+                'data' => 'label', 'name' => 'label', 'title' => 'label'
+            ])
+            ->addColumn([
+                'data' => 'link', 'name' => 'link', 'title' => 'link'
+            ])
+            ->addAction([
+                'data' => 'action', 'name' => 'action', 'title' => 'action'
+            ])
+        ;
+        return view('menubuilder::index', ['grid' => $grid, 'pageTitle' => 'View All Menu Items']);
     }
 
     /**
