@@ -1,6 +1,13 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => '$LOWER_NAME$', 'namespace' => '$MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Controllers'], function()
+Route::group(['middleware' => ['web'], 'prefix'=>'$LOWER_NAME$', 'namespace' => '$MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Controllers'], function (){
+    Route::get('/{$LOWER_NAME$}',[
+        'as' => '$LOWER_NAME$.show',
+        'uses' => '$STUDLY_NAME$Controller@show'
+    ]);
+});
+
+Route::group(['middleware' => ['web','role:admin,access_backend','menu'], 'prefix' => 'admin', 'namespace' => '$MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Controllers'], function()
 {
-    Route::get('/', '$STUDLY_NAME$Controller@index');
+    Route::resource('$LOWER_NAME$', '$STUDLY_NAME$Controller',['except'=> ['show']]);
 });

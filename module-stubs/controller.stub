@@ -7,23 +7,26 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
-use Modules\MenuBuilder\Entities\$CLASS$;
-use Modules\MenuBuilder\Forms\$CLASS$Form;
+use Modules\$STUDLY_NAME$\Entities\$STUDLY_NAME$;
+use Modules\$STUDLY_NAME$\Forms\$STUDLY_NAME$Form;
 use Yajra\Datatables\Html\Builder;
 
 class $CLASS$ extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Response
+     * @param Request $request
+     * @param Builder $gridBuilder
+     * @param $STUDLY_NAME$ $$LOWER_NAME$Repository
+     * @return View | string
      */
-    public function index(Request $request, Builder $gridBuilder, $CLASS$ ${DS}$LOWER_NAME$Repository)
+    public function index(Request $request, Builder $gridBuilder, $STUDLY_NAME$ $$LOWER_NAME$Repository)
     {
         if ($request->ajax()) {
-            $products = ${DS}$LOWER_NAME$Repository->select(['id'])->get();
-            return \Datatables::of($products)
+            $$LOWER_NAME$s = $$LOWER_NAME$Repository->select(['id'])->get();
+            return \Datatables::of($$LOWER_NAME$s)
                 ->addColumn('action', function ($item) {
-                    return '<a href="' . route('product.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('product.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
+                    return '<a href="' . route('$LOWER_NAME$.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('$LOWER_NAME$.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
                 })
                 ->editColumn('id', 'ID: {{$id}}')
                 ->make(true);
@@ -47,7 +50,10 @@ class $CLASS$ extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create($CLASS$Form::class);
+        $form = $formBuilder->create($STUDLY_NAME$Form::class,[
+            'url' => route('$LOWER_NAME$.store'),
+            'method' => 'POST'
+        ]);
         return view('$LOWER_NAME$::manage', [
             'form' => $form,
             'title' => 'Create New $STUDLY_NAME$'
@@ -59,9 +65,9 @@ class $CLASS$ extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function store(Request $request, $CLASS$ ${DS}$LOWER_NAME$Repository)
+    public function store(Request $request, $STUDLY_NAME$ $$LOWER_NAME$Repository)
     {
-        ${DS}$LOWER_NAME$Repository->create(array_filter($request->all(),'strlen'));
+        $$LOWER_NAME$Repository->create(array_filter($request->all(),'strlen'));
         return redirect()->route('$LOWER_NAME$.index');
     }
 
@@ -69,42 +75,42 @@ class $CLASS$ extends Controller
      * Show the form for editing the specified resource.
      * @param Request $request
      * @param FormBuilder $formBuilder
-     * @param $CLASS$ ${DS}$LOWER_NAME$
+     * @param $STUDLY_NAME$ $$LOWER_NAME$
      * @return Response
      */
-    public function edit(Request $request, FormBuilder $formBuilder,$CLASS$ ${DS}$LOWER_NAME$) : Response
+    public function edit(Request $request, FormBuilder $formBuilder,$STUDLY_NAME$ $$LOWER_NAME$) : Response
     {
-        $form = $formBuilder->create(MenuItemForm::class,[
-            'model' => ${DS}$LOWER_NAME$,
-            'url' => route('$LOWER_NAME$.update', $menuItem->id),
+        $form = $formBuilder->create($STUDLY_NAME$Form::class,[
+            'model' => $$LOWER_NAME$,
+            'url' => route('$LOWER_NAME$.update', $$LOWER_NAME$->id),
             'method' => 'PUT'
         ]);
         return view('$LOWER_NAME$::manage',[
             'form' => $form,
-            'pageTitle' => 'Edit '.${DS}$LOWER_NAME$->label
+            'pageTitle' => 'Edit $STUDLY_NAME$'.$$LOWER_NAME$->id
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      * @param  Request $request
-     * @param $CLASS$ ${DS}$LOWER_NAME$
+     * @param $STUDLY_NAME$ $$LOWER_NAME$
      * @return RedirectResponse|Response
      */
-    public function update(Request $request, $CLASS$ ${DS}$LOWER_NAME$) : RedirectResponse
+    public function update(Request $request, $STUDLY_NAME$ $$LOWER_NAME$) : RedirectResponse
     {
-        ${DS}$LOWER_NAME$->update($request->all());
+        $$LOWER_NAME$->update($request->all());
         return redirect()->route('$LOWER_NAME$.index');
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param $CLASS$ ${DS}$LOWER_NAME$
+     * @param $STUDLY_NAME$ $$LOWER_NAME$
      * @return RedirectResponse|Response
      */
-    public function destroy($CLASS$ ${DS}$LOWER_NAME$) : RedirectResponse
+    public function destroy($STUDLY_NAME$ $$LOWER_NAME$) : RedirectResponse
     {
-        ${DS}$LOWER_NAME$->delete();
+        $$LOWER_NAME$->delete();
         return redirect()->back();
     }
 }

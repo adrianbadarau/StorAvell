@@ -3,6 +3,8 @@
 namespace $NAMESPACE$;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\$STUDLY_NAME$\Entities\$STUDLY_NAME$;
+use Route;
 
 class $CLASS$ extends ServiceProvider
 {
@@ -23,6 +25,7 @@ class $CLASS$ extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        Route::model('$LOWER_NAME$',$STUDLY_NAME$::class);
     }
 
     /**
