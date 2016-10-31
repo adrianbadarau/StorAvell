@@ -5,16 +5,46 @@ namespace Modules\Product\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\View\View;
+use Modules\Product\Entities\Product;
+use Yajra\Datatables\Html\Builder;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Response
+     * @param Request $request
+     * @param Builder $gridBuilder
+     * @param Product $productRepository
+     * @return View | string
      */
-    public function index()
+    public function index(Request $request, Builder $gridBuilder, Product $productRepository)
     {
-        return view('product::index');
+        if ($request->ajax()) {
+            $products = $productRepository->select(['id', 'name', 'price'])->get();
+            return \Datatables::of($products)
+                ->addColumn('action', function ($item) {
+                    return '<a href="' . route('product.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('product.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
+                })
+                ->editColumn('id', 'ID: {{$id}}')
+                ->make(true);
+        }
+        $grid = $gridBuilder
+            ->addColumn([
+                'data' => 'id', 'name' => 'id', 'title' => '#'
+            ])
+            ->addColumn([
+                'data' => 'name', 'name' => 'name', 'title' => 'Product name'
+            ])
+            ->addColumn([
+                'data' => 'price', 'name' => 'price', 'title' => 'Product Price'
+            ])
+            ->addAction([])
+        ;
+        return view('product::index', [
+            'grid' => $grid,
+            'pageTitle' => 'View all products'
+        ]);
     }
 
     /**
@@ -35,11 +65,16 @@ class ProductController extends Controller
     {
     }
 
+    public function show(Request $request, Product $product) : Response
+    {
+        return response($product);
+    }
+
     /**
      * Show the form for editing the specified resource.
      * @return Response
      */
-    public function edit()
+    public function edit(Request $request, Product $product) : View
     {
         return view('product::edit');
     }

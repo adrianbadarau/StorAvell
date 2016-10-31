@@ -3,6 +3,8 @@
 namespace Modules\MenuBuilder\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\MenuBuilder\Entities\MenuItem;
+use Route;
 
 class MenuBuilderServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,8 @@ class MenuBuilderServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+
+        Route::model('menubuilder',MenuItem::class);
     }
 
     /**

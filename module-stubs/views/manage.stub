@@ -7,7 +7,7 @@
 @section('content')
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Menu Item Information</h3>
+            <h3 class="box-title">$LOWER_NAME$ Information</h3>
         </div><!-- /.box-header -->
         <div class="box-body">
             {!! form($form) !!}

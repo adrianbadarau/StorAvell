@@ -62,7 +62,7 @@ class MenuBuilderController extends Controller
         $form = $formBuilder->create(MenuItemForm::class);
         return view('menubuilder::manage', [
             'form' => $form,
-            'title' => 'Create New Menu Item'
+            'pageTitle' => 'Create New Menu Item'
         ]);
     }
 
@@ -81,12 +81,13 @@ class MenuBuilderController extends Controller
      * Show the form for editing the specified resource.
      * @param Request $request
      * @param FormBuilder $formBuilder
-     * @param $id int
+     * @param MenuItem $menuItem
      * @return Response
+     * @internal param MenuItem $menuItemRepository
+     * @internal param int $id
      */
-    public function edit(Request $request, FormBuilder $formBuilder,$id)
+    public function edit(Request $request, FormBuilder $formBuilder, MenuItem $menuItem)
     {
-        $menuItem = MenuItem::find($id);
         $form = $formBuilder->create(MenuItemForm::class,[
             'model' => $menuItem,
             'url' => route('menubuilder.update', $menuItem->id),
@@ -94,32 +95,32 @@ class MenuBuilderController extends Controller
         ]);
         return view('menubuilder::manage',[
             'form' => $form,
-            'title' => 'Edit '.$menuItem->label
+            'pageTitle' => 'Edit '.$menuItem->label
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      * @param  Request $request
-     * @param $id
-     * @return Response
+     * @param MenuItem $menuItem
+     * @return RedirectResponse|Response
+     * @internal param $id
      */
-    public function update(Request $request, $id) : RedirectResponse
+    public function update(Request $request, MenuItem $menuItem) : RedirectResponse
     {
-        $item = MenuItem::find($id);
-        $item->update($request->all());
+        $menuItem->update($request->all());
         return redirect()->route('menubuilder.index');
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param $id
-     * @return Response
+     * @param MenuItem $menuItem
+     * @return RedirectResponse|Response
+     * @internal param $id
      */
-    public function destroy($id) : RedirectResponse
+    public function destroy(MenuItem $menuItem) : RedirectResponse
     {
-        $item = MenuItem::find($id);
-        $item->delete();
+        $menuItem->delete();
         return redirect()->back();
     }
 }

@@ -2,9 +2,14 @@
 
 namespace $CLASS_NAMESPACE$;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Modules\MenuBuilder\Entities\$CLASS$;
+use Modules\MenuBuilder\Forms\$CLASS$Form;
+use Yajra\Datatables\Html\Builder;
 
 class $CLASS$ extends Controller
 {
@@ -12,18 +17,41 @@ class $CLASS$ extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request, Builder $gridBuilder, $CLASS$ ${DS}$LOWER_NAME$Repository)
     {
-        return view('$LOWER_NAME$::index');
+        if ($request->ajax()) {
+            $products = ${DS}$LOWER_NAME$Repository->select(['id'])->get();
+            return \Datatables::of($products)
+                ->addColumn('action', function ($item) {
+                    return '<a href="' . route('product.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('product.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
+                })
+                ->editColumn('id', 'ID: {{$id}}')
+                ->make(true);
+        }
+        $grid = $gridBuilder
+            ->addColumn([
+                'data' => 'id', 'name' => 'id', 'title' => '#'
+            ])
+            ->addAction([])
+        ;
+        return view('$LOWER_NAME$::index', [
+            'grid' => $grid,
+            'pageTitle' => 'View all $LOWER_NAME$s'
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
+     * @param FormBuilder $formBuilder
      * @return Response
      */
-    public function create()
+    public function create(FormBuilder $formBuilder)
     {
-        return view('$LOWER_NAME$::create');
+        $form = $formBuilder->create($CLASS$Form::class);
+        return view('$LOWER_NAME$::manage', [
+            'form' => $form,
+            'title' => 'Create New $STUDLY_NAME$'
+        ]);
     }
 
     /**
@@ -31,33 +59,52 @@ class $CLASS$ extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $CLASS$ ${DS}$LOWER_NAME$Repository)
     {
+        ${DS}$LOWER_NAME$Repository->create(array_filter($request->all(),'strlen'));
+        return redirect()->route('$LOWER_NAME$.index');
     }
 
     /**
      * Show the form for editing the specified resource.
+     * @param Request $request
+     * @param FormBuilder $formBuilder
+     * @param $CLASS$ ${DS}$LOWER_NAME$
      * @return Response
      */
-    public function edit()
+    public function edit(Request $request, FormBuilder $formBuilder,$CLASS$ ${DS}$LOWER_NAME$) : Response
     {
-        return view('$LOWER_NAME$::edit');
+        $form = $formBuilder->create(MenuItemForm::class,[
+            'model' => ${DS}$LOWER_NAME$,
+            'url' => route('$LOWER_NAME$.update', $menuItem->id),
+            'method' => 'PUT'
+        ]);
+        return view('$LOWER_NAME$::manage',[
+            'form' => $form,
+            'pageTitle' => 'Edit '.${DS}$LOWER_NAME$->label
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      * @param  Request $request
-     * @return Response
+     * @param $CLASS$ ${DS}$LOWER_NAME$
+     * @return RedirectResponse|Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $CLASS$ ${DS}$LOWER_NAME$) : RedirectResponse
     {
+        ${DS}$LOWER_NAME$->update($request->all());
+        return redirect()->route('$LOWER_NAME$.index');
     }
 
     /**
      * Remove the specified resource from storage.
-     * @return Response
+     * @param $CLASS$ ${DS}$LOWER_NAME$
+     * @return RedirectResponse|Response
      */
-    public function destroy()
+    public function destroy($CLASS$ ${DS}$LOWER_NAME$) : RedirectResponse
     {
+        ${DS}$LOWER_NAME$->delete();
+        return redirect()->back();
     }
 }

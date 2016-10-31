@@ -31,6 +31,7 @@ return [
             'json' => 'module.json',
             'views/index' => 'Resources/views/index.blade.php',
             'views/master' => 'Resources/views/layouts/master.blade.php',
+            'views/manage' => 'Resources/views/manage.blade.php',
             'scaffold/config' => 'Config/config.php',
             'composer' => 'composer.json',
         ],
