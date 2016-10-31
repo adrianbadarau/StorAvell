@@ -117,7 +117,8 @@ class ProductController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @return Response
+     * @param Product $product
+     * @return RedirectResponse|Response
      */
     public function destroy(Product $product) : RedirectResponse
     {
