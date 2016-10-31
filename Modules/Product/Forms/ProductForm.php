@@ -19,8 +19,13 @@ class ProductForm extends Form
             ])
             ->add('price','number', [
                 'attr' => [
-                    'steps' => 'any',
+                    'step' => 'any',
                     'min' => 0
+                ]
+            ])
+            ->add('Save_Product','submit',[
+                'attr'=>[
+                    'class' => 'btn btn-primary'
                 ]
             ])
         ;

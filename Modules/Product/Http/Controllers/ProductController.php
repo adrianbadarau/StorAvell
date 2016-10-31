@@ -2,11 +2,14 @@
 
 namespace Modules\Product\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
+use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Product\Entities\Product;
+use Modules\Product\Forms\ProductForm;
 use Yajra\Datatables\Html\Builder;
 
 class ProductController extends Controller
@@ -49,20 +52,31 @@ class ProductController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Response
+     * @param FormBuilder $formBuilder
+     * @return Response|View
      */
-    public function create()
+    public function create(FormBuilder $formBuilder) : View
     {
-        return view('product::create');
+        $form = $formBuilder->create(ProductForm::class,[
+            'method' => 'POST',
+            'url' => route('product.store')
+        ]);
+        return view('product::manage',[
+            'pageTitle' => "Create new Product",
+            'form' => $form
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      * @param  Request $request
+     * @param Product $productRepository
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $productRepository)
     {
+        $productRepository->create(array_filter($request->all(),'strlen'));
+        return redirect()->route('product.index');
     }
 
     public function show(Request $request, Product $product) : Response
@@ -72,11 +86,22 @@ class ProductController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @return Response
+     * @param Request $request
+     * @param FormBuilder $formBuilder
+     * @param Product $product
+     * @return Response|View
      */
-    public function edit(Request $request, Product $product) : View
+    public function edit(Request $request, FormBuilder $formBuilder,Product $product) : View
     {
-        return view('product::edit');
+        $form = $formBuilder->create(ProductForm::class,[
+            'method' => 'PUT',
+            'url' => route('product.update', $product->id),
+            'model' => $product
+        ]);
+        return view('product::manage',[
+            'pageTitle' => 'Edit product' . $product->name,
+            'form' => $form
+        ]);
     }
 
     /**
@@ -84,15 +109,19 @@ class ProductController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Product $product) : RedirectResponse
     {
+        $product->update($request->all());
+        return redirect()->route('product.index');
     }
 
     /**
      * Remove the specified resource from storage.
      * @return Response
      */
-    public function destroy()
+    public function destroy(Product $product) : RedirectResponse
     {
+        $product->delete();
+        return redirect()->back();
     }
 }
