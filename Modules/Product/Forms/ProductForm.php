@@ -23,7 +23,7 @@ class ProductForm extends Form
                     'min' => 0
                 ]
             ])
-            ->add('attributes','attributeField')
+            ->add('custom_attributes','attributeField')
             ->add('Save_Product','submit',[
                 'attr'=>[
                     'class' => 'btn btn-primary'

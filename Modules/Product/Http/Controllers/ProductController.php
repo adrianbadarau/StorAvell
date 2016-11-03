@@ -75,7 +75,7 @@ class ProductController extends Controller
      */
     public function store(Request $request, Product $productRepository)
     {
-        $productRepository->create(array_filter($request->all(),'strlen'));
+        $productRepository->create($request->all());
         return redirect()->route('product.index');
     }
 
@@ -107,7 +107,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      * @param  Request $request
-     * @return Response
+     * @param Product $product
+     * @return RedirectResponse|Response
      */
     public function update(Request $request, Product $product) : RedirectResponse
     {
