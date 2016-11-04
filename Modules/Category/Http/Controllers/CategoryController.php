@@ -5,6 +5,7 @@ namespace Modules\Category\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Category\DataTables\CategoryIndexGrid;
 
 class CategoryController extends Controller
 {
@@ -12,9 +13,15 @@ class CategoryController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request,CategoryIndexGrid $grid)
     {
-        return view('category::index');
+        if($request->ajax()){
+            return $grid->ajax();
+        }
+        return view('category::index',[
+            'pageTitle' => 'View all Categories',
+            'grid' => $grid->html()
+        ]);
     }
 
     /**
