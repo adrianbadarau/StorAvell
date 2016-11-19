@@ -8,10 +8,11 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Cms\Entities\Cms;
+use Modules\Cms\Entities\Post;
 use Modules\Cms\Forms\CmsForm;
 use Yajra\Datatables\Html\Builder;
 
-class CmsController extends Controller
+class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,13 +21,13 @@ class CmsController extends Controller
      * @param Cms $cmsRepository
      * @return View | string
      */
-    public function index(Request $request, Builder $gridBuilder, Cms $cmsRepository)
+    public function index(Request $request, Builder $gridBuilder, Post $postRepository)
     {
         if ($request->ajax()) {
-            $cmss = $cmsRepository->select(['id'])->get();
-            return \Datatables::of($cmss)
+            $posts = $postRepository->select(['id'])->get();
+            return \Datatables::of($posts)
                 ->addColumn('action', function ($item) {
-                    return '<a href="' . route('cms.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('cms.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
+                    return '<a href="' . route('post.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('cms.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
                 })
                 ->editColumn('id', 'ID: {{$id}}')
                 ->make(true);
@@ -37,9 +38,9 @@ class CmsController extends Controller
             ])
             ->addAction([])
         ;
-        return view('cms::index', [
+        return view('cms::posts.index', [
             'grid' => $grid,
-            'pageTitle' => 'View all cmss'
+            'pageTitle' => 'View all Posts'
         ]);
     }
 
@@ -50,67 +51,68 @@ class CmsController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(CmsForm::class,[
-            'url' => route('cms.store'),
+        $form = $formBuilder->create(PostForm::class,[
+            'url' => route('post.store'),
             'method' => 'POST'
         ]);
-        return view('cms::manage', [
+        return view('cms::posts.manage', [
             'form' => $form,
-            'title' => 'Create New Cms'
+            'title' => 'Create New Post'
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      * @param  Request $request
+     * @param Post $postRepository
      * @return Response
      */
-    public function store(Request $request, Cms $cmsRepository)
+    public function store(Request $request, Post $postRepository)
     {
-        $cmsRepository->create(array_filter($request->all(),'strlen'));
-        return redirect()->route('cms.index');
+        $postRepository->create(array_filter($request->all(),'strlen'));
+        return redirect()->route('post.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      * @param Request $request
      * @param FormBuilder $formBuilder
-     * @param Cms $cms
+     * @param Post $post
      * @return Response
      */
-    public function edit(Request $request, FormBuilder $formBuilder,Cms $cms) : Response
+    public function edit(Request $request, FormBuilder $formBuilder,Post $post) : Response
     {
-        $form = $formBuilder->create(CmsForm::class,[
-            'model' => $cms,
-            'url' => route('cms.update', $cms->id),
+        $form = $formBuilder->create(PostForm::class,[
+            'model' => $post,
+            'url' => route('cms.update', $post->id),
             'method' => 'PUT'
         ]);
         return view('cms::manage',[
             'form' => $form,
-            'pageTitle' => 'Edit Cms'.$cms->id
+            'pageTitle' => 'Edit Post '.$post->id
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      * @param  Request $request
-     * @param Cms $cms
+     * @param Post $post
      * @return RedirectResponse|Response
      */
-    public function update(Request $request, Cms $cms) : RedirectResponse
+    public function update(Request $request, Post $post) : RedirectResponse
     {
-        $cms->update($request->all());
-        return redirect()->route('cms.index');
+        $post->update($request->all());
+        return redirect()->route('post.index');
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param Cms $cms
+     * @param Post $post
      * @return RedirectResponse|Response
      */
-    public function destroy(Cms $cms) : RedirectResponse
+    public function destroy(Post $post) : RedirectResponse
     {
-        $cms->delete();
+        $post->delete();
         return redirect()->back();
     }
 }

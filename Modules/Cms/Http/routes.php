@@ -1,7 +1,7 @@
 <?php
 
 Route::group(['middleware' => ['web'], 'prefix'=>'cms', 'namespace' => 'Modules\Cms\Http\Controllers'], function (){
-    Route::get('/{cms}',[
+    Route::get('/blog',[
         'as' => 'cms.show',
         'uses' => 'CmsController@show'
     ]);

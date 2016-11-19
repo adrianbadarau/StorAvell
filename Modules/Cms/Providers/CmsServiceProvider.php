@@ -3,7 +3,9 @@
 namespace Modules\Cms\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Cms\Entities\Cms;
+use Modules\Cms\Entities\Category;
+use Modules\Cms\Entities\Page;
+use Modules\Cms\Entities\Post;
 use Route;
 
 class CmsServiceProvider extends ServiceProvider
@@ -25,7 +27,9 @@ class CmsServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        Route::model('cms',Cms::class);
+        Route::model('page',Page::class);
+        Route::model('post', Post::class);
+        Route::model('category', Category::class);
     }
 
     /**

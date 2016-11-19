@@ -1,6 +1,8 @@
 * text=auto
 *.css linguist-vendored
 *.less linguist-vendored
+/vendor/* linguist-vendored
+*.php linguist-language=PHP
 
 .codeclimate.yml export-ignore
 .editorconfig export-ignore
