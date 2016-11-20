@@ -1,5 +1,6 @@
 <?php
 
+use Modules\Cms\Forms\Fields\WysiwygFieldType;
 use Modules\Product\Forms\AttributeFieldType;
 
 return [
@@ -47,5 +48,6 @@ return [
     'custom_fields' => [
 //        'datetime' => App\Forms\Fields\Datetime::class
         'attributeField' => AttributeFieldType::class,
+        'wysiwyg' => WysiwygFieldType::class
     ]
 ];

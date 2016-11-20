@@ -1,4 +1,3 @@
-{{--@php(dd($options))--}}
 @if(isset($options['value']))
     @php
         $attributes = json_decode($options['value']);
@@ -119,26 +118,5 @@
             })
         });
     </script>
-    {{--<script>--}}
-        {{--$(document).ready(function() {--}}
-            {{--var index = 0;--}}
-            {{--$(document).on('click','.addNewAttribute',function () {--}}
-                {{--index++;--}}
-                {{--var elem = $('#form_{{$name}}_attribute').clone();--}}
-                {{--elem.attr('id',elem.attr('id') + index);--}}
-                {{--var formFields = elem.find('input.form-control');--}}
-                {{--$.each(formFields, function (i, item) {--}}
-                    {{--var nameField = $(item).attr('name').replace('0',index);--}}
-                    {{--$(item).attr('name',nameField);--}}
-                    {{--console.log(nameField,item);--}}
-                {{--});--}}
-                {{--console.log(formFields);--}}
-                {{--$('#form_{{$name}}_attribute').after(elem);--}}
-            {{--});--}}
-            {{--$(document).on('click','.removeAttribute',function () {--}}
-                {{--$(this).closest('div.row').remove();--}}
-            {{--})--}}
-        {{--});--}}
-    {{--</script>--}}
 @endif
 

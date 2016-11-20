@@ -17,7 +17,7 @@ class PageForm extends Form
     {
         $this->add('title', 'text');
         $this->add('slug','text');
-        $this->add('content', 'textarea');
+        $this->add('content', 'wysiwyg');
         $this->add('is_active','select',[
             'choices' => [
                 0 => 'No',

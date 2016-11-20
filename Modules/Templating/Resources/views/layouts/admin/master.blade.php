@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{url('plugins/daterangepicker/daterangepicker.css')}}">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{url('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+    @stack('css')
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,6 +50,7 @@
             });
         });
     </script>
+    @stack('head-scripts')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -601,5 +603,7 @@
 <script src="{{url('dist/js/rails/delete.js')}}"></script>
 
 @yield('scripts')
+
+@stack('scripts')
 </body>
 </html>

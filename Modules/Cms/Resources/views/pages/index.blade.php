@@ -24,6 +24,6 @@
 
 @endsection
 
-@section('scripts')
+@push('scripts')
     {!! $grid->scripts() !!}
-@endsection
+@endpush
