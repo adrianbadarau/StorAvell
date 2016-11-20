@@ -7,7 +7,7 @@ Route::group(['middleware' => ['web'], 'prefix'=>'cms', 'namespace' => 'Modules\
     ]);
 });
 
-Route::group(['middleware' => ['web','role:admin,access_backend','menu'], 'prefix' => 'admin', 'namespace' => 'Modules\Cms\Http\Controllers'], function()
+Route::group(['middleware' => ['web','role:admin,access_backend','menu'], 'prefix' => 'admin/cms', 'namespace' => 'Modules\Cms\Http\Controllers'], function()
 {
-    Route::resource('cms', 'CmsController',['except'=> ['show']]);
+    Route::resource('page', 'PagesController',['except'=> ['show']]);
 });

@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Cms\Entities\Page;
+use Modules\Cms\Grids\PageIndexGrid;
 use Yajra\Datatables\Html\Builder;
 
 class PagesController extends Controller
@@ -15,31 +16,16 @@ class PagesController extends Controller
     /**
      * Display a listing of the resource.
      * @param Request $request
-     * @param Builder $gridBuilder
+     * @param PageIndexGrid $grid
      * @param Page $pageRepository
      * @return View|string
      * @internal param Cms $cmsRepository
      */
-    public function index(Request $request, Builder $gridBuilder, Page $pageRepository)
+    public function index(Request $request, PageIndexGrid $grid, Page $pageRepository)
     {
-        if ($request->ajax()) {
-            $pages = $pageRepository->select(['id'])->get();
-            return \Datatables::of($pages)
-                ->addColumn('action', function ($item) {
-                    return '<a href="' . route('page.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('cms.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
-                })
-                ->editColumn('id', 'ID: {{$id}}')
-                ->make(true);
-        }
-        $grid = $gridBuilder
-            ->addColumn([
-                'data' => 'id', 'name' => 'id', 'title' => '#'
-            ])
-            ->addAction([])
-        ;
-        return view('cms::pages.index', [
-            'grid' => $grid,
-            'pageTitle' => 'View all Pages'
+        return $grid->render('cms::pages.index',[
+            'pageTitle' => 'View all Pages',
+            'grid' => $grid->html()
         ]);
     }
 
