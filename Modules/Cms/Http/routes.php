@@ -3,7 +3,7 @@
 Route::group(['middleware' => ['web'], 'prefix'=>'cms', 'namespace' => 'Modules\Cms\Http\Controllers'], function (){
     Route::get('/blog',[
         'as' => 'cms.show',
-        'uses' => 'CmsController@show'
+        'uses' => 'CategoriesController@index'
     ]);
 });
 

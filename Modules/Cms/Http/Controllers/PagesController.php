@@ -2,29 +2,32 @@
 
 namespace Modules\Cms\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\View\View;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Cms\Entities\Page;
 use Modules\Cms\Forms\PageForm;
 use Modules\Cms\Grids\PageIndexGrid;
-use Yajra\Datatables\Html\Builder;
+
 
 class PagesController extends Controller
 {
+    use FormBuilderTrait;
+
     /**
      * Display a listing of the resource.
-     * @param Request $request
      * @param PageIndexGrid $grid
-     * @param Page $pageRepository
-     * @return View|string
+     * @return View|JsonResponse
      * @internal param Cms $cmsRepository
      */
-    public function index(Request $request, PageIndexGrid $grid, Page $pageRepository)
+    public function index(PageIndexGrid $grid)
     {
-        return $grid->render('cms::pages.index',[
+        return $grid->render('cms::pages.index', [
             'pageTitle' => 'View all Pages',
             'grid' => $grid->html()
         ]);
@@ -33,14 +36,15 @@ class PagesController extends Controller
     /**
      * Show the form for creating a new resource.
      * @param FormBuilder $formBuilder
-     * @return Response
+     * @return View
      */
-    public function create(FormBuilder $formBuilder)
+    public function create(FormBuilder $formBuilder) :View
     {
-        $form = $formBuilder->create(PageForm::class,[
+        $form = $formBuilder->create(PageForm::class, [
             'url' => route('page.store'),
             'method' => 'POST'
         ]);
+
         return view('cms::pages.manage', [
             'form' => $form,
             'pageTitle' => 'Create New Page'
@@ -51,11 +55,15 @@ class PagesController extends Controller
      * Store a newly created resource in storage.
      * @param  Request $request
      * @param Page $pageRepository
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(Request $request, Page $pageRepository)
+    public function store(Request $request, Page $pageRepository) : RedirectResponse
     {
-        $pageRepository->create(array_filter($request->all(),'strlen'));
+        $form = $this->form(PageForm::class);
+        if(!$form->isValid()){
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $pageRepository->create(array_filter($form->getFieldValues(), 'strlen'));
         return redirect()->route('page.index');
     }
 
@@ -64,18 +72,18 @@ class PagesController extends Controller
      * @param Request $request
      * @param FormBuilder $formBuilder
      * @param Page $page
-     * @return Response
+     * @return Response|View
      */
-    public function edit(Request $request, FormBuilder $formBuilder,Page $page) : Response
+    public function edit(Request $request, FormBuilder $formBuilder, Page $page) : View
     {
-        $form = $formBuilder->create(PageForm::class,[
+        $form = $formBuilder->create(PageForm::class, [
             'model' => $page,
             'url' => route('page.update', $page->id),
             'method' => 'PUT'
         ]);
-        return view('cms::pages.manage',[
+        return view('cms::pages.manage', [
             'form' => $form,
-            'pageTitle' => 'Edit Page '.$page->id
+            'pageTitle' => 'Edit Page ' . $page->id
         ]);
     }
 
