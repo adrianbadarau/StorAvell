@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Cms\Entities\Page;
+use Modules\Cms\Forms\PageForm;
 use Modules\Cms\Grids\PageIndexGrid;
 use Yajra\Datatables\Html\Builder;
 
@@ -42,7 +43,7 @@ class PagesController extends Controller
         ]);
         return view('cms::pages.manage', [
             'form' => $form,
-            'title' => 'Create New Cms'
+            'pageTitle' => 'Create New Page'
         ]);
     }
 
