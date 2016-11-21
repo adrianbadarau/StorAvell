@@ -27,9 +27,11 @@ class CmsServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+
         Route::model('page',Page::class);
         Route::model('post', Post::class);
         Route::model('category', Category::class);
+
     }
 
     /**

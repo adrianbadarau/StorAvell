@@ -15,5 +15,22 @@
     </div>
 @endsection
 
-@section('scripts')
-@endsection
+@push('scripts')
+<script>
+    console.log('orking1');
+    $(document).on('blur','#title', function () {
+        var strTile = $(this).val();
+        console.log('orking2');
+        $('#slug').val(convertToSlug(strTile));
+    });
+    $(document).on('blur', '#slug', function () {
+        $(this).val(convertToSlug($(this).val()));
+        console.log('orking3');
+    });
+    function convertToSlug(value)
+    {
+//        return text.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+        return value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    }
+</script>
+@endpush

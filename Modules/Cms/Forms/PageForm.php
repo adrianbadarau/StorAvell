@@ -16,11 +16,11 @@ class PageForm extends Form
     public function buildForm()
     {
         $this->add('title', 'text',[
-            'rules' => 'required|min:15',
+            'rules' => 'required|min:5',
         ]);
         $this->add('slug', 'text',[
             'label' => 'Seo URL Slug',
-            'rules' => 'required|unique:cms_pages',
+            'rules' => 'unique:cms_pages',
             'error_messages' => [
                 'slug.required' => 'The slug is a mandatory field',
                 'slug.unique' => 'There url slug must me unique'

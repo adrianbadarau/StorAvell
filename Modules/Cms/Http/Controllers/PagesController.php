@@ -59,10 +59,13 @@ class PagesController extends Controller
      */
     public function store(Request $request, Page $pageRepository) : RedirectResponse
     {
+
         $form = $this->form(PageForm::class);
-        if(!$form->isValid()){
+
+        if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
+
         $pageRepository->create(array_filter($form->getFieldValues(), 'strlen'));
         return redirect()->route('page.index');
     }

@@ -17,14 +17,42 @@ class AddCmsToMenuTableSeeder extends Seeder
     {
         Model::unguard();
 
-        MenuItem::create([
+        $parent = MenuItem::create([
             'label' => 'CMS Section',
-            'link' => 'admin/cms',
+            'link' => 'admin/cms/page',
             'open_in_new_tab' => 0,
             'is_active' => 1,
             'parent_id' => null,
-            'active_zone' => 'admin/cms',
+            'active_zone' => '',
             'icon_class' => 'folder-open-o'
+        ]);
+
+        MenuItem::create([
+            'label' => 'Pages',
+            'link' => 'admin/cms/page',
+            'open_in_new_tab' => 0,
+            'is_active' => 1,
+            'parent_id' => $parent->id,
+            'active_zone' => 'admin/cms/page',
+            'icon_class' => 'file-text-o'
+        ]);
+        MenuItem::create([
+            'label' => 'Posts',
+            'link' => 'admin/cms/post',
+            'open_in_new_tab' => 0,
+            'is_active' => 1,
+            'parent_id' => $parent->id,
+            'active_zone' => 'admin/cms/post/*',
+            'icon_class' => 'newspaper-o'
+        ]);
+        MenuItem::create([
+            'label' => 'CMS Categories',
+            'link' => 'admin/cms/category',
+            'open_in_new_tab' => 0,
+            'is_active' => 1,
+            'parent_id' => $parent->id,
+            'active_zone' => 'admin/cms/category/*',
+            'icon_class' => 'sitemap'
         ]);
     }
 }
