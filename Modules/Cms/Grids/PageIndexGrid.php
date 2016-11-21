@@ -23,7 +23,9 @@ class PageIndexGrid extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->addColumn('action', 'page.edit')
+            ->addColumn('action', function ($item) {
+                return '<a href="' . route('page.edit', $item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . " | " . '<a href="' . route('page.destroy', $item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
+            })
             ->make(true);
     }
 
@@ -34,7 +36,7 @@ class PageIndexGrid extends DataTable
      */
     public function query()
     {
-        $query = Page::query();
+        $query = Page::query()->with('author');
 
         return $this->applyScopes($query);
     }
@@ -49,7 +51,7 @@ class PageIndexGrid extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->ajax('')
-            ->addAction(['width' => '80px'])
+            ->addAction()
             ->parameters($this->getBuilderParameters());
     }
 
@@ -61,10 +63,9 @@ class PageIndexGrid extends DataTable
     protected function getColumns()
     {
         return [
-            'id',
-            // add your columns
-            'created_at',
-            'updated_at',
+            ['data' => 'id', 'name'=> 'id', 'title' => '#'],
+            ['data' => 'title', 'name' => 'title', 'title' => 'Page Title'],
+            ['data' => 'author.name', 'name'=>'author.name', 'title' => 'Page author'],
         ];
     }
 
