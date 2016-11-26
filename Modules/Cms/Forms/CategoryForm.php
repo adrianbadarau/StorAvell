@@ -16,5 +16,6 @@ class CategoryForm extends Form
     public function buildForm()
     {
         $this->add('name','text');
+        $this->add('Submit', 'submit');
     }
 }
