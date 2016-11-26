@@ -7,7 +7,7 @@
 @section('content')
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Page Information</h3>
+            <h3 class="box-title">Post Information</h3>
         </div><!-- /.box-header -->
         <div class="box-body">
             {!! form($form) !!}

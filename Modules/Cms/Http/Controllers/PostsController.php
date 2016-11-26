@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Cms\Entities\Post;
+use Modules\Cms\Forms\PostForm;
 use Modules\Cms\Grids\PostIndexGrid;
 
 class PostsController extends Controller
@@ -35,7 +36,7 @@ class PostsController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(Posts::class,[
+        $form = $formBuilder->create(PostForm::class,[
             'url' => route('post.store'),
             'method' => 'POST'
         ]);
