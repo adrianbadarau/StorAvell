@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Cms\Entities\Post;
 use Modules\Cms\Forms\PostForm;
 use Modules\Cms\Grids\PostIndexGrid;
 
 class PostsController extends Controller
 {
+    use FormBuilderTrait;
+
     /**
      * Display a listing of the resource.
      * @param PostIndexGrid $grid
@@ -36,7 +39,7 @@ class PostsController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(PostForm::class,[
+        $form = $formBuilder->create(PostForm::class, [
             'url' => route('post.store'),
             'method' => 'POST'
         ]);
@@ -48,13 +51,17 @@ class PostsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
      * @param Post $postRepository
-     * @return Response
+     * @return RedirectResponse|Response
      */
-    public function store(Request $request, Post $postRepository)
+    public function store(Post $postRepository): RedirectResponse
     {
-        $postRepository->create(array_filter($request->all(),'strlen'));
+        $form = $this->form(PostForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $postRepository->create($form->getFieldValues());
         return redirect()->route('post.index');
     }
 
@@ -65,16 +72,16 @@ class PostsController extends Controller
      * @param Post $post
      * @return Response
      */
-    public function edit(Request $request, FormBuilder $formBuilder,Post $post) : Response
+    public function edit(FormBuilder $formBuilder, Post $post): Response
     {
-        $form = $formBuilder->create(PostForm::class,[
+        $form = $formBuilder->create(PostForm::class, [
             'model' => $post,
             'url' => route('cms.update', $post->id),
             'method' => 'PUT'
         ]);
-        return view('cms::manage',[
+        return view('cms::manage', [
             'form' => $form,
-            'pageTitle' => 'Edit Post '.$post->id
+            'pageTitle' => 'Edit Post ' . $post->id
         ]);
     }
 
@@ -84,9 +91,13 @@ class PostsController extends Controller
      * @param Post $post
      * @return RedirectResponse|Response
      */
-    public function update(Request $request, Post $post) : RedirectResponse
+    public function update(Post $post): RedirectResponse
     {
-        $post->update($request->all());
+        $form = $this->form(PostForm::class);
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $post->update($form->getFieldValues());
         return redirect()->route('post.index');
     }
 
@@ -95,7 +106,7 @@ class PostsController extends Controller
      * @param Post $post
      * @return RedirectResponse|Response
      */
-    public function destroy(Post $post) : RedirectResponse
+    public function destroy(Post $post): RedirectResponse
     {
         $post->delete();
         return redirect()->back();
