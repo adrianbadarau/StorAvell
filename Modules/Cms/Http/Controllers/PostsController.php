@@ -38,7 +38,7 @@ class PostsController extends Controller
      * @param FormBuilder $formBuilder
      * @return Response
      */
-    public function create(FormBuilder $formBuilder)
+    public function create(FormBuilder $formBuilder) : View
     {
         $form = $formBuilder->create(PostForm::class, [
             'url' => route('post.store'),
