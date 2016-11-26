@@ -12,7 +12,7 @@
                 <div class="box-tools pull-right">
                     <!-- Buttons, labels, and many other things can be placed here! -->
                     <!-- Here is a label for example -->
-                    <a href="{{route('page.create')}}"><button class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i> Add New</button></a>
+                    <a href="{{route('post.create')}}"><button class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i> Add New</button></a>
                 </div><!-- /.box-tools -->
             </div><!-- /.box-header -->
             <div class="box-body">

@@ -19,4 +19,13 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'author_id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+           $model->author_id = \Auth::getUser()->id;
+        });
+    }
 }

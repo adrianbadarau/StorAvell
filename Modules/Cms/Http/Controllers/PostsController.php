@@ -45,7 +45,7 @@ class PostsController extends Controller
         ]);
         return view('cms::posts.manage', [
             'form' => $form,
-            'title' => 'Create New Post'
+            'pageTitle' => 'Create New Post'
         ]);
     }
 

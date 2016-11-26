@@ -9,6 +9,7 @@
 namespace Modules\Cms\Grids;
 
 
+use Modules\Cms\Entities\Post;
 use Yajra\Datatables\Services\DataTable;
 
 class PostIndexGrid extends DataTable
@@ -35,7 +36,7 @@ class PostIndexGrid extends DataTable
      */
     public function query()
     {
-        $query = PostIndexGrid::query()->with(['author', 'category']);
+        $query = Post::query()->with(['author', 'categories']);
 
         return $this->applyScopes($query);
     }
@@ -50,7 +51,7 @@ class PostIndexGrid extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->ajax('')
-            ->addAction(['width' => '80px'])
+            ->addAction()
             ->parameters($this->getBuilderParameters());
     }
 
