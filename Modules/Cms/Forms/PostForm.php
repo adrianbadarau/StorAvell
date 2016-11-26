@@ -11,7 +11,7 @@ namespace Modules\Cms\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 
-class PostsForm extends Form 
+class PostForm extends Form
 {
     public function buildForm()
     {
