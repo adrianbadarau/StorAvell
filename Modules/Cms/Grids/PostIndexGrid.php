@@ -2,17 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: adrianbadarau
- * Date: 11/19/16
- * Time: 7:25 PM
+ * Date: 26/11/2016
+ * Time: 00:10
  */
 
 namespace Modules\Cms\Grids;
 
 
-use Modules\Cms\Entities\Page;
 use Yajra\Datatables\Services\DataTable;
 
-class PageIndexGrid extends DataTable
+class PostIndexGrid extends DataTable
 {
     /**
      * Display ajax response.
@@ -24,7 +23,7 @@ class PageIndexGrid extends DataTable
         return $this->datatables
             ->eloquent($this->query())
             ->addColumn('action', function ($item) {
-                return '<a href="' . route('page.edit', $item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . " | " . '<a href="' . route('page.destroy', $item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
+                return '<a href="' . route('post.edit', $item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . " | " . '<a href="' . route('post.destroy', $item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
             })
             ->make(true);
     }
@@ -36,7 +35,7 @@ class PageIndexGrid extends DataTable
      */
     public function query()
     {
-        $query = Page::query()->with('author');
+        $query = PostIndexGrid::query()->with(['author', 'category']);
 
         return $this->applyScopes($query);
     }
@@ -51,7 +50,7 @@ class PageIndexGrid extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->ajax('')
-            ->addAction()
+            ->addAction(['width' => '80px'])
             ->parameters($this->getBuilderParameters());
     }
 
@@ -64,7 +63,7 @@ class PageIndexGrid extends DataTable
     {
         return [
             ['data' => 'id', 'name'=> 'id', 'title' => '#'],
-            ['data' => 'title', 'name' => 'title', 'title' => 'Page Title'],
+            ['data' => 'title', 'name' => 'title', 'title' => 'Post Title'],
             ['data' => 'author.name', 'name'=>'author.name', 'title' => 'Page author'],
         ];
     }
@@ -76,6 +75,6 @@ class PageIndexGrid extends DataTable
      */
     protected function filename()
     {
-        return 'pages_' . time();
+        return 'posts_' . time();
     }
 }

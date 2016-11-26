@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
-use Modules\Cms\Entities\Cms;
 use Modules\Cms\Entities\Post;
-use Modules\Cms\Forms\CmsForm;
 use Yajra\Datatables\Html\Builder;
 
 class PostsController extends Controller
