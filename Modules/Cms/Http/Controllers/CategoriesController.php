@@ -6,85 +6,75 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\View\View;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Cms\Entities\Category;
-use Modules\Cms\Entities\Cms;
-use Modules\Cms\Forms\CmsForm;
-use Yajra\Datatables\Html\Builder;
+use Modules\Cms\Forms\CategoryForm;
+use Modules\Cms\Grids\CategoryIndexGrid;
 
 class CategoriesController extends Controller
 {
+    use FormBuilderTrait;
     /**
      * Display a listing of the resource.
-     * @param Request $request
-     * @param Builder $gridBuilder
-     * @param Category $categoryRepository
+     * @param CategoryIndexGrid $grid
      * @return View|string
+     * @internal param Request $request
+     * @internal param Builder $gridBuilder
+     * @internal param Category $categoryRepository
      */
-    public function index(Request $request, Builder $gridBuilder, Category $categoryRepository)
+    public function index(CategoryIndexGrid $grid)
     {
-        if ($request->ajax()) {
-            $categories = $categoryRepository->select(['id'])->get();
-            return \Datatables::of($categories)
-                ->addColumn('action', function ($item) {
-                    return '<a href="' . route('cms_category.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('cms.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
-                })
-                ->editColumn('id', 'ID: {{$id}}')
-                ->make(true);
-        }
-        $grid = $gridBuilder
-            ->addColumn([
-                'data' => 'id', 'name' => 'id', 'title' => '#'
-            ])
-            ->addAction([])
-        ;
-        return view('cms::categories.index', [
-            'grid' => $grid,
-            'pageTitle' => 'View all Categories'
+        return $grid->render("cms::categories.index",[
+            'pageTitle' => 'All categories',
+            'grid' => $grid->html()
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      * @param FormBuilder $formBuilder
-     * @return Response
+     * @return Response|View
      */
-    public function create(FormBuilder $formBuilder)
+    public function create(FormBuilder $formBuilder) : View
     {
         $form = $formBuilder->create(CategoryForm::class,[
-            'url' => route('cms_category.store'),
+            'url' => route('cms.category.store'),
             'method' => 'POST'
         ]);
         return view('cms::categories.manage', [
             'form' => $form,
-            'title' => 'Create New Category'
+            'pageTitle' => 'Create New Category'
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param  Request $request
      * @param Category $categoryRepository
-     * @return Response
+     * @return RedirectResponse|Response
      */
-    public function store(Request $request, Category $categoryRepository)
+    public function store(Category $categoryRepository) : RedirectResponse
     {
-        $categoryRepository->create(array_filter($request->all(),'strlen'));
-        return redirect()->route('cms_category.index');
+        $form = $this->form(CategoryForm::class);
+        if(!$form->isValid()){
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $categoryRepository->create($form->getFieldValues());
+        return redirect()->route('cms.category.index');
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param Request $request
      * @param FormBuilder $formBuilder
      * @param Category $category
-     * @return Response
+     * @return Response|View
      */
-    public function edit(Request $request, FormBuilder $formBuilder,Category $category) : Response
+    public function edit( FormBuilder $formBuilder,Category $category) : View
     {
         $form = $formBuilder->create(CategoryForm::class,[
             'model' => $category,
-            'url' => route('cms_category.update', $category->id),
+            'url' => route('cms.category.update', $category->id),
             'method' => 'PUT'
         ]);
         return view('cms::categories.manage',[
@@ -101,8 +91,12 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, Category $category) : RedirectResponse
     {
-        $category->update($request->all());
-        return redirect()->route('cms_category.index');
+        $form = $this->form(CategoryForm::class);
+        if(!$form->isValid()){
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $category->update($form->getFieldValues());
+        return redirect()->route('cms.category.index');
     }
 
     /**

@@ -11,5 +11,5 @@ Route::group(['middleware' => ['web','role:admin,access_backend','menu'], 'prefi
 {
     Route::resource('page', 'PagesController',['except'=> ['show']]);
     Route::resource('post', 'PostsController', ['except' => ['show']]);
-    Route::resource('category', 'CategoriesController', ['except' => ['show']]);
+    Route::resource('category', 'CategoriesController', ['except' => ['show'],'as'=>'cms']);
 });
