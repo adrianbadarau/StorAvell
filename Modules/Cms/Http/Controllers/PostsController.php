@@ -8,37 +8,23 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Cms\Entities\Post;
-use Yajra\Datatables\Html\Builder;
+use Modules\Cms\Grids\PostIndexGrid;
 
 class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @param Request $request
-     * @param Builder $gridBuilder
-     * @param Cms $cmsRepository
-     * @return View | string
+     * @param PostIndexGrid $grid
+     * @return View|string
+     * @internal param Request $request
+     * @internal param Builder $gridBuilder
+     * @internal param Cms $cmsRepository
      */
-    public function index(Request $request, Builder $gridBuilder, Post $postRepository)
+    public function index(PostIndexGrid $grid)
     {
-        if ($request->ajax()) {
-            $posts = $postRepository->select(['id'])->get();
-            return \Datatables::of($posts)
-                ->addColumn('action', function ($item) {
-                    return '<a href="' . route('post.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('cms.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
-                })
-                ->editColumn('id', 'ID: {{$id}}')
-                ->make(true);
-        }
-        $grid = $gridBuilder
-            ->addColumn([
-                'data' => 'id', 'name' => 'id', 'title' => '#'
-            ])
-            ->addAction([])
-        ;
-        return view('cms::posts.index', [
-            'grid' => $grid,
-            'pageTitle' => 'View all Posts'
+        return $grid->render('cms::posts.index', [
+            'pageTitle' => 'View all Posts',
+            'grid' => $grid->html()
         ]);
     }
 
