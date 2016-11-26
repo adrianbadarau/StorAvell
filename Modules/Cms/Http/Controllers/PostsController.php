@@ -6,6 +6,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\View\View;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Cms\Entities\Post;
@@ -72,14 +73,14 @@ class PostsController extends Controller
      * @param Post $post
      * @return Response
      */
-    public function edit(FormBuilder $formBuilder, Post $post): Response
+    public function edit(FormBuilder $formBuilder, Post $post): View
     {
         $form = $formBuilder->create(PostForm::class, [
             'model' => $post,
-            'url' => route('cms.update', $post->id),
+            'url' => route('post.update', $post->id),
             'method' => 'PUT'
         ]);
-        return view('cms::manage', [
+        return view('cms::posts.manage', [
             'form' => $form,
             'pageTitle' => 'Edit Post ' . $post->id
         ]);
