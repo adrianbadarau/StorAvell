@@ -17,4 +17,9 @@ class Product extends Model
     {
         $this->attributes['custom_attributes'] = json_encode($values);
     }
+
+    public function mediaItems(string $related)
+    {
+        return $this->morphToMany($related, 'mediable', 'media_item_mediable', null, 'media_id');
+    }
 }
