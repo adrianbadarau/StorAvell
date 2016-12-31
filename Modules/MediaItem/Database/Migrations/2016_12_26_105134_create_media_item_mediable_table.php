@@ -13,9 +13,9 @@ class CreateMediaItemMediableTable extends Migration
     public function up()
     {
         Schema::create('media_item_mediable', function (Blueprint $table) {
-            $table->increments('media_id');
+            $table->integer('media_id',false,true);
             $table->morphs('mediable');
-            $table->timestamps();
+            $table->primary(['media_id', 'mediable_id', 'mediable_type']);
         });
     }
 

@@ -10,7 +10,7 @@ Route::group(['middleware' => ['web'], 'prefix'=>'mediaitem', 'namespace' => 'Mo
         /**
          * @var $item Product
         **/
-        $item = $product->find(2);
+        $item = $product->find(1);
 //        dd(Product::class);
         $mediaItems = $item->mediaItems(Image::class);
         dd($mediaItems->get());
