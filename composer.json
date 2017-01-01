@@ -18,7 +18,8 @@
         "caffeinated/menus": "^3.0",
         "yajra/laravel-datatables-oracle": "^6.21",
         "kris/laravel-form-builder": "1.*",
-        "laravelcollective/html": "^5.2.0"
+        "laravelcollective/html": "^5.2.0",
+        "barryvdh/laravel-elfinder": "^0.3.8"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
