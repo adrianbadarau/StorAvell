@@ -16,3 +16,7 @@ use StorAvell\Http\Controllers\Auth\AuthController;
 Route::get('/', 'AngularController@serveApp');
 Auth::routes();
 Route::get('/unsupported-browser', 'AngularController@unsupported');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
