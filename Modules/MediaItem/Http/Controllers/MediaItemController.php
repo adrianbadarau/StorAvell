@@ -2,17 +2,24 @@
 
 namespace Modules\MediaItem\Http\Controllers;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
-use Modules\MediaItem\Entities\MediaItem;
-use Modules\MediaItem\Forms\MediaItemForm;
 use Yajra\Datatables\Html\Builder;
 
 class MediaItemController extends Controller
 {
+    /**
+     * @var $app \Illuminate\Foundation\Application
+     */
+    protected $app;
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
     /**
      * Display a listing of the resource.
      * @param Request $request
@@ -20,27 +27,19 @@ class MediaItemController extends Controller
      * @param MediaItem $mediaitemRepository
      * @return View | string
      */
-    public function index(Request $request, Builder $gridBuilder, MediaItem $mediaitemRepository)
+    public function index(Request $request, Builder $gridBuilder)
     {
-        if ($request->ajax()) {
-            $mediaitems = $mediaitemRepository->select(['id'])->get();
-            return \Datatables::of($mediaitems)
-                ->addColumn('action', function ($item) {
-                    return '<a href="' . route('mediaitem.edit',$item->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>'." | " .'<a href="' . route('mediaitem.destroy',$item->id) . '" class="btn btn-xs btn-danger" data-method="delete" rel="nofollow" data-confirm="Are you sure you want to delete this?"><i class="fa fa-trash"></i> Delete</a>';
-                })
-                ->editColumn('id', 'ID: {{$id}}')
-                ->make(true);
+//        return view('mediaitem::index', [
+//            'pageTitle' => 'View all mediaitems'
+//        ]);
+        $dir = 'packages/barryvdh/elfinder/';
+        $locale = str_replace("-",  "_", $this->app->config->get('app.locale'));
+        if (!file_exists($this->app['path.public'] . "/$dir/js/i18n/elfinder.$locale.js")) {
+            $locale = false;
         }
-        $grid = $gridBuilder
-            ->addColumn([
-                'data' => 'id', 'name' => 'id', 'title' => '#'
-            ])
-            ->addAction([])
-        ;
-        return view('mediaitem::index', [
-            'grid' => $grid,
-            'pageTitle' => 'View all mediaitems'
-        ]);
+        $csrf = true;
+
+        return view('vendor.elfinder.elfinder', compact('dir', 'locale', 'csrf'));
     }
 
     /**

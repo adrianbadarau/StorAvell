@@ -19,5 +19,5 @@ Route::group(['middleware' => ['web'], 'prefix'=>'mediaitem', 'namespace' => 'Mo
 
 Route::group(['middleware' => ['web','role:admin,access_backend','menu'], 'prefix' => 'admin', 'namespace' => 'Modules\MediaItem\Http\Controllers'], function()
 {
-    Route::resource('mediaitem', 'MediaItemController',['except'=> ['show']]);
+    Route::resource('mediaitems', 'MediaItemController',['except'=> ['show']]);
 });

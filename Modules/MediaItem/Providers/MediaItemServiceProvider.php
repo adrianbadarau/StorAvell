@@ -25,7 +25,7 @@ class MediaItemServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        Route::model('mediaitem',MediaItem::class);
+//        Route::model('mediaitem',MediaItem::class);
     }
 
     /**

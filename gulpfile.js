@@ -46,6 +46,11 @@ let assets = [
 
 elixir(mix => {
     mix.bower()
+        .copy([
+            'node_modules/jquery-colorbox/jquery.colorbox-min.js',
+            'node_modules/jquery-colorbox/example1/colorbox.css',
+            'vendor/barryvdh/laravel-elfinder/resources/assets/js/standalonepopup.min.js'
+        ], 'public/vendor/jquery-colorbox/')
         .copy('Modules/Templating/Assets/FrontEnd/app/**/*.html', 'public/views/app/')
         .webpack('Modules/Templating/Assets/FrontEnd/index.main.js', 'public/js/app.js')
         .sass(['**/*.scss', 'critical.scss'], 'public/css')
