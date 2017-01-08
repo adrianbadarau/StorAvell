@@ -24,6 +24,8 @@ Install Guide
         * php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
         * php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="config"
         * php artisan vendor:publish --tag=datatables
+        * artisan elfinder:publish
+        * php artisan vendor:publish --provider='Barryvdh\Elfinder\ElfinderServiceProvider' --tag=config
     3 Post Install Run:
         * php artisan view:clear
         * php artisan route:clear
